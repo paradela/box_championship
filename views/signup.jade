@@ -1,0 +1,48 @@
+extends layout
+
+block additional_header
+    link(rel='stylesheet', href='/stylesheets/signin.css')
+    link(rel='stylesheet', href='/stylesheets/errors.css')
+
+block content
+    .container
+        .row
+            .col-md-6.col-md-offset-3
+                .panel.panel-login
+                    .panel-heading
+                        .row
+                            .col-lg-12
+                                .text-center
+                                    a.active Registar
+                        hr
+                    .panel-body
+                        .row
+                            .col-lg-12
+                                form#register-form(action='/signup', method='post', role='form', style='display: block;')
+
+                                    each val in errors
+                                        .isa_error
+                                            i.fa.fa-times-circle
+                                            = val
+
+                                    .form-group
+                                        input#name.form-control(type='text', name='name', tabindex='1', placeholder='Nome', value=name)
+                                    .form-group
+                                        input#email.form-control(type='email', name='email', tabindex='1', placeholder='Email Address', value=email)
+                                    .form-group
+                                        input#password.form-control(type='password', name='password', tabindex='2', placeholder='Password')
+                                    .form-group
+                                        input#confirm_password.form-control(type='password', name='confirm_password', tabindex='2', placeholder='Confirme a Password')
+                                    .form-group
+                                        .row
+                                            .col-sm-6.col-sm-offset-3
+                                                input#register-submit.form-control.btn.btn-register(type='submit', name='register-submit', tabindex='4', value='Registar')
+                                    .form-group
+                                        .row
+                                            .col-lg-12
+                                                .text-center
+                                                    a.forgot-password(href='/login', tabindex='5') Login
+
+
+
+
