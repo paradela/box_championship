@@ -31,24 +31,21 @@ router.post('/', function(req, res, next) {
       user.getUserByEmail(email, function (err, document) {
         if (document == null) {
 
-          if (!validateName(name)) {
+          if (!validateName(name))
             throw 'Nome deve conter pelo menos três letras. Não usar outros caracteres.';
-          }
-          if (!validatePassword(password, password_conf)) {
+
+          if (!validatePassword(password, password_conf))
             throw 'Password mal formada. Deve conter maiúsculas, minúsculas e números. Mínimo de 6 caracteres.';
-          }
 
-          if (password != password_conf) {
-            /*log error*/
-
-          }
+          if (password != password_conf)
+            throw 'Passwords devem ser iguais.';
           else {
             user.insertUser(name, email, password, function (err, result) {
               if (result != null && result.result.ok == 1) {
-                res.redirect('/users')
+                res.redirect('/users');
               }
               else {
-                /*log error*/
+                throw 'Erro ao criar o utilizador, por favor tente mais tarde.';
               }
             });
           }

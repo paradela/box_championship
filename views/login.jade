@@ -20,11 +20,11 @@ block content
                             .col-lg-12
                                 form#login-form(action='/login', method='post', role='form', style='display: block;')
 
-                                    // list errors
-                                    each val in errors
-                                        .isa_error
-                                            i.fa.fa-times-circle
-                                            = val
+                                    if errors != null
+                                        each val in errors
+                                            .isa_error
+                                                i.fa.fa-times-circle
+                                                = val
 
                                     .form-group
                                         input#user_email.form-control(type='email', name='email', tabindex='1', placeholder='Email', value=email)
