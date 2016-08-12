@@ -5,21 +5,21 @@
 var user = require('../model/user');
 var cryptor = require('./encryptor');
 
-var key = 'abcdefghijklmnopqrstuvxz123456789';
 var auth_cookie_name = "auth";
 
 exports.createAuthCookie = function(username, res) {
-  var value = {
-    user : cryptor.encrypt(username),
-    expire : new Date() + (30 * 24 * 60 * 60 * 1000)
-  };
+  var value = cryptor.encrypt(username);
   res.cookie(auth_cookie_name, value);
 };
 
 exports.verifyAuthCookie = function(req, next) {
-  var cookie = req.cookies;
-  //todo validate expiration date
+  var cookie = req.cookies.auth;
 
-  var user_email = cryptor.decrypt(cookie.user);
-  user.getUserByEmail(user_email, next);
+  if (cookie == null) {
+    next();
+  }
+  else {
+    var user_email = cryptor.decrypt(cookie);
+    user.getUserByEmail(user_email, next);
+  }
 };

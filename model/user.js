@@ -1,24 +1,23 @@
 
 var db = require('../db');
+var cryptor = require('../helper/encryptor');
 
 var table_name = 'users';
-var field_email = 'email';
-var field_name = 'name';
-var field_password = 'password';
 
 exports.authenticate = function(email, password, done) {
-
+  var hashed_pwd = cryptor.hash(password);
+  db.get().collection(table_name).findOne({email : email, password : hashed_pwd}, done);
 };
 
 exports.getUserByEmail = function(email, result) {
-  db.get().collection(table_name).findOne({field_email : email}, result);
+  db.get().collection(table_name).findOne({email : email}, result);
 };
 
 exports.insertUser = function(name, email, password, result) {
   var new_user = {
-    field_name : name,
-    field_email : email,
-    field_password : password
+    name : name,
+    email : email,
+    password : cryptor.hash(password)
   };
 
   db.get().collection(table_name).insertOne(new_user, result);

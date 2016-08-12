@@ -5,9 +5,15 @@ var express = require('express');
 var router = express.Router();
 
 var user = require('../model/user');
+var cookie = require('../helper/cookies');
 
 router.get('/', function(req, res, next) {
-  res.render('signup');
+  cookie.verifyAuthCookie(req, function(err, user) {
+    if(user == null) {
+      res.render('signup');
+    }
+    else res.redirect('/users');
+  });
 });
 
 router.post('/', function(req, res, next) {
@@ -22,13 +28,15 @@ router.post('/', function(req, res, next) {
     'name' : ''
   };
 
-  try {
-    if (!validateEmail(email)) {
-      throw 'Email mal formado. Ex: utilizador@mail.com';
-    }
-
-    else
-      user.getUserByEmail(email, function (err, document) {
+  if (!validateEmail(email)) {
+    status.errors.push('Email mal formado. Ex: utilizador@mail.com');
+    status.name = name;
+    status.email = email;
+    res.render('signup', status);
+  }
+  else
+    user.getUserByEmail(email, function (err, document) {
+      try {
         if (document == null) {
 
           if (!validateName(name))
@@ -42,25 +50,22 @@ router.post('/', function(req, res, next) {
           else {
             user.insertUser(name, email, password, function (err, result) {
               if (result != null && result.result.ok == 1) {
+                cookie.createAuthCookie(email, res);
                 res.redirect('/users');
               }
-              else {
-                throw 'Erro ao criar o utilizador, por favor tente mais tarde.';
-              }
+              else throw 'Erro ao criar o utilizador, por favor tente mais tarde.';
             });
           }
         }
-        else {
-          throw 'Email introduzido já se encontra em uso.';
-        }
-
-      });
-  }
-  catch (err) {
-    status.errors.push(err);
-  }
-
-  res.render('signup', status);
+        else throw 'Email introduzido já se encontra em uso.';
+      }
+      catch (err) {
+        status.errors.push(err);
+        status.name = name;
+        status.email = email;
+        res.render('signup', status);
+      }
+    });
 });
 
 function validateEmail(email) {

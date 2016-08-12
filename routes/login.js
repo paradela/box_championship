@@ -2,17 +2,27 @@ var express = require('express');
 var router = express.Router();
 
 var cookie = require('../helper/cookies');
+var users = require('../model/user');
 
-/* GET users listing. */
 router.get('/', function(req, res, next) {
-  cookie.createAuthCookie('username', res);
-  res.render('login');
+  cookie.verifyAuthCookie(req, function(err, user) {
+    if(user == null) {
+      res.render('login');
+    }
+    else res.redirect('/users');
+  });
 });
 
 router.post('/', function(req, res, next) {
-  var c = req.cookies;
-  res.render('login', {'errors': ['Nome não está bem formatado', 'Email inválido pá!'], 'email': 'abc@mail.pt'});
-  //res.redirect('/users')
+  users.authenticate(req.body.email, req.body.password, function(err, user){
+    if(user != null) {
+      cookie.createAuthCookie(user.email, res);
+      res.redirect('/users');
+    }
+    else {
+      res.render('login', {'errors': ['Email ou password inválidos.'], 'email': req.body.email});
+    }
+  });
 });
 
 module.exports = router;
