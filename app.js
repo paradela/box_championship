@@ -8,8 +8,9 @@ var bodyParser = require('body-parser');
 var db = require('./db')
 
 var users = require('./routes/users');
-var login = require('./routes/login')
-var signup = require('./routes/signup')
+var login = require('./routes/login');
+var signup = require('./routes/signup');
+var index = require('./routes/index')
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', index);
 app.use('/login', login);
 app.use('/users', users);
 app.use('/signup', signup);
