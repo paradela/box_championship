@@ -23,3 +23,7 @@ exports.verifyAuthCookie = function(req, next) {
     user.getUserByEmail(user_email, next);
   }
 };
+
+exports.deleteCookie = function(res) {
+  res.clearCookie(auth_cookie_name);
+};

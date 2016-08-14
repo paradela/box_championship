@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     if(user == null) {
       res.render('login');
     }
-    else res.redirect('/users');
+    else res.redirect('/');
   });
 });
 
@@ -17,7 +17,7 @@ router.post('/', function(req, res, next) {
   users.authenticate(req.body.email, req.body.password, function(err, user){
     if(user != null) {
       cookie.createAuthCookie(user.email, res);
-      res.redirect('/users');
+      res.redirect('/');
     }
     else {
       res.render('login', {'errors': ['Email ou password inválidos.'], 'email': req.body.email});

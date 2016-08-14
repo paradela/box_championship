@@ -15,24 +15,42 @@ nav.navbar.navbar-default.navbar-fixed-top
                     a(href='#') Classificação
                 li
                     a(href='#') Eventos
-                li.dropdown
-                    a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                        | A Minha Conta
-                        span.caret
-                    ul.dropdown-menu
-                        li
-                            a(href='#') Editar Perfil
-                        li
-                            a(href='#') A Minha Equipa
+                li
+                    a(href='#') A Minha Equipa
+
+                if coach != null && coach == true
+                    li.dropdown
+                        a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                            | Gestão
+                            span.caret
+                        ul.dropdown-menu
+                            li
+                                a(href='#') Competições
+                            li
+                                a(href='#') Introduzir Resultados
+
+                if glassman != null && glassman == true
+                    li.dropdown
+                        a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                            | Admin
+                            span.caret
+                        ul.dropdown-menu
+                            li
+                                a(href='#') Utilizadores
 
             ul.nav.navbar-nav.navbar-right
                 if user != null
-                    li
-                        p.navbar-text.navbar-right
-                            | Olá
-                            = user_name
-                    li
-                        a(href='#') Sair
+                    li.dropdown
+                        a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                            = user.name
+                            span.caret
+                        ul.dropdown-menu
+                            li
+                                a(href='#') Editar Perfil
+                            li.divider(role='separator')
+                            li
+                                a(href='/logout') Sair
+
                 else
                     li
                         a(href='/login') Login

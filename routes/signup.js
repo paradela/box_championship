@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
     if(user == null) {
       res.render('signup');
     }
-    else res.redirect('/users');
+    else res.redirect('/');
   });
 });
 
@@ -51,7 +51,7 @@ router.post('/', function(req, res, next) {
             user.insertUser(name, email, password, function (err, result) {
               if (result != null && result.result.ok == 1) {
                 cookie.createAuthCookie(email, res);
-                res.redirect('/users');
+                res.redirect('/');
               }
               else throw 'Erro ao criar o utilizador, por favor tente mais tarde.';
             });
