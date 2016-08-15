@@ -22,7 +22,8 @@ exports.insertUser = function(name, email, password, result) {
     name : name,
     email : email,
     password : cryptor.hash(password),
-    roles : [ROLES.ATHLETE]
+    roles : [ROLES.ATHLETE],
+    active : true
   };
 
   db.get().collection(table_name).insertOne(new_user, result);
@@ -37,4 +38,8 @@ exports.userHasRole = function(user, role) {
     }
   }
   return false;
+};
+
+exports.getUsersWithRole = function(role, result) {
+  db.get().collection(table_name).find({roles : role}, result);
 };

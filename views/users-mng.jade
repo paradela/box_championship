@@ -1,0 +1,52 @@
+//
+   Created by Ricardo on 14/08/2016.
+
+
+extends layout
+
+block page_title
+    title= 'Gestão de Utilizadores'
+
+
+block additional_header
+
+block content
+    include navigation-bar.jade
+
+    .container
+        h2 Utilizadores
+            button.btn.btn-primary.pull-right Guardar
+        .table-responsive
+        table.table
+            thead
+                tr
+                    th ID
+                    th Name
+                    th Email
+                    th Reset Password
+                    th Coach
+                    th Active
+
+                if user_list != null
+                    each u in user_list
+                        tr
+                            td
+                                = u._id
+                            td
+                                = u.name
+                            td
+                                = u.email
+                            td
+                                button.btn.btn-default.btn-xs Reset
+                            td
+                                - var isCoach = false;
+                                - for (var i = 0; i < u.roles.length; i++) { if(u.roles[i] == 2) isCoach = true; }
+                                if isCoach
+                                    input(type='checkbox', checked)
+                                else
+                                    input(type='checkbox')
+                            td
+                                if u.active
+                                    input(type='checkbox', checked)
+                                else
+                                    input(type='checkbox')
