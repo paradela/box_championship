@@ -1,0 +1,62 @@
+//
+   Created by Ricardo on 14/08/2016.
+
+
+extends layout
+
+block page_title
+    title= 'Competições'
+
+
+block additional_header
+
+block content
+    include navigation-bar.jade
+
+    .container
+
+        br
+        if errors != null
+            each val in errors
+                .alert.alert-danger(role='alert')
+                    = val
+        button.btn.btn-primary(type='button', onclick='$("#new_comp").toggleClass(\'hidden\');') Nova Competição
+        .row.hidden(id='new_comp')
+            br
+            .col-lg-6
+                form#login-form(action='/competitions', method='post', role='form', style='display: block;')
+                    .form-group
+                        .input-group
+                            input.form-control(type='text', name='name', placeholder='Nome da Nova Competição')
+                            span.input-group-btn
+                                input#login-submit.form-control.btn.btn-default(type='submit', name='login-submit', tabindex='4', value='Submeter')
+
+
+        h3 Competições
+            //button.btn.btn-primary.pull-right Guardar
+        .table-responsive
+        table.table
+            thead
+                tr
+                    th Name
+                    th Data Criação
+                    th Equipas
+                    th Eventos
+                    th Estado
+
+                if competition_list != null
+                    each c in competition_list
+                        tr
+                            td
+                                = c.name
+                            td
+                                = c.creation_date.getDate() + '-' + c.creation_date.getMonth() + '-' + c.creation_date.getFullYear()
+                            td
+                                a.btn.btn-primary.btn-sm(href='#') Equipas
+                            td
+                                a.btn.btn-primary.btn-sm(href='#') Equipas
+                            td
+                                if c.open
+                                    a.btn.btn-success.btn-sm(href='#') Open
+                                else
+                                    a.btn.btn-danger.btn-sm(href='#') Closed
