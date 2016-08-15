@@ -1,12 +1,9 @@
 
 var db = require('../db');
 var cryptor = require('../helper/encryptor');
+var ObjectId = require('mongodb').ObjectID;
 
 var table_name = 'users';
-
-var ROLES = {ATHLETE : 1, COACH : 2, GLASSMAN : 3};
-
-exports.ROLES = ROLES;
 
 exports.authenticate = function(email, password, done) {
   var hashed_pwd = cryptor.hash(password);
@@ -22,24 +19,22 @@ exports.insertUser = function(name, email, password, result) {
     name : name,
     email : email,
     password : cryptor.hash(password),
-    roles : [ROLES.ATHLETE],
+    coach : false,
+    glassman : false,
     active : true
   };
 
   db.get().collection(table_name).insertOne(new_user, result);
 };
 
-exports.userHasRole = function(user, role) {
-  if(user != null && role != null) {
-    var len = user.roles.length;
-    for(var i = 0; i < len; i++) {
-      var r = user.roles[i];
-      if(r == role) return true;
-    }
-  }
-  return false;
+exports.getUsers = function(result) {
+  db.get().collection(table_name).find({}, result);
 };
 
-exports.getUsersWithRole = function(role, result) {
-  db.get().collection(table_name).find({roles : role}, result);
+exports.updateUserRole = function(id, coach, result) {
+  db.get().collection(table_name).update({_id: ObjectId(id)}, {$set : {coach : coach}}, result);
+};
+
+exports.updateUserStatus = function(id, active, result) {
+  db.get().collection(table_name).update({_id: ObjectId(id)}, {$set : {active : active}}, result);
 };

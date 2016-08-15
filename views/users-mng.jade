@@ -9,6 +9,7 @@ block page_title
 
 
 block additional_header
+    script(src='javascripts/users-mng-ws.js')
 
 block content
     include navigation-bar.jade
@@ -39,14 +40,12 @@ block content
                             td
                                 button.btn.btn-default.btn-xs Reset
                             td
-                                - var isCoach = false;
-                                - for (var i = 0; i < u.roles.length; i++) { if(u.roles[i] == 2) isCoach = true; }
-                                if isCoach
-                                    input(type='checkbox', checked)
+                                if u.coach
+                                    input(type='checkbox', onclick='updateUserRole(\'' + u._id + '\', this)', checked)
                                 else
-                                    input(type='checkbox')
+                                    input(type='checkbox', onclick='updateUserRole(\'' + u._id + '\', this)')
                             td
                                 if u.active
-                                    input(type='checkbox', checked)
+                                    input(type='checkbox', onclick='updateUserStatus(\'' + u._id + '\', this)', checked)
                                 else
-                                    input(type='checkbox')
+                                    input(type='checkbox', onclick='updateUserStatus(\'' + u._id + '\', this)')

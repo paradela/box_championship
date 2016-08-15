@@ -7,8 +7,8 @@ var users = require('../model/user')
 /* GET home page. */
 router.get('/', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
-    var coach = users.userHasRole(user, users.ROLES.COACH);
-    var glassman = users.userHasRole(user, users.ROLES.GLASSMAN);
+    var coach = (user != null)? user.coach : null;
+    var glassman = (user != null)? user.glassman : null;
     res.render('index', { user : user, coach : coach, glassman : glassman});
   });
 });
