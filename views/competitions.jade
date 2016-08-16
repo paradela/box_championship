@@ -43,6 +43,7 @@ block content
                     th Equipas
                     th Eventos
                     th Estado
+                    th Eliminar
 
                 if competition_list != null
                     each c in competition_list
@@ -54,9 +55,11 @@ block content
                             td
                                 a.btn.btn-primary.btn-sm(href='#') Equipas
                             td
-                                a.btn.btn-primary.btn-sm(href='#') Equipas
+                                a.btn.btn-primary.btn-sm(href='#') Eventos
                             td
                                 if c.open
-                                    a.btn.btn-success.btn-sm(href='#') Open
+                                    a.btn.btn-success.btn-sm(href='/competitions/set_status/' + c._id + '/false') Open
                                 else
-                                    a.btn.btn-danger.btn-sm(href='#') Closed
+                                    a.btn.btn-danger.btn-sm(href='/competitions/set_status/' + c._id + '/true') Closed
+                            td
+                                a.btn.btn-danger.btn-sm(href='/competitions/delete/' + c._id) Eliminar

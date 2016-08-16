@@ -7,7 +7,7 @@ var users = require('../model/user')
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
-    if(user.glassman) {
+    if (user != null && user.glassman) {
       users.getUsers(function(err, cursor) {
         cursor.toArray(function (error, list) {
           if(error != null) list = [];
@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/set_coach', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
-    if (user.glassman) {
+    if (user != null && user.glassman) {
       var id = req.body.id;
       var setCoach = req.body.coach;
       if(setCoach != null && (setCoach == "true" || setCoach == "false")) {
@@ -43,7 +43,7 @@ router.post('/set_coach', function(req, res, next) {
 
 router.post('/set_status', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
-    if (user.glassman) {
+    if (user != null && user.glassman) {
       var id = req.body.id;
       var setActive = req.body.active;
       if(setActive != null && (setActive == "true" || setActive == "false")) {

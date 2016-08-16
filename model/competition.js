@@ -27,5 +27,23 @@ exports.getCompetitionById = function(id, result) {
   db.get().collection(table_name).find({_id: ObjectId(id)}, result);
 };
 
+exports.deleteCompetitionById = function(id, result) {
+  this.getCompetitionById(id, function(err, comp){
+    if(comp != null) {
+      //TODO: delete teams and events
+      db.get().collection(table_name).deleteOne({_id: ObjectId(id)}, function(err, res) {
+        if(res != null && res.result.ok == 1)
+          result(true)
+        else result(false);
+      });
+    }
+    else result(false);
+  });
+};
+
+exports.updateCompetitionStatus = function(id, open, result) {
+  db.get().collection(table_name).update({_id: ObjectId(id)}, {$set : {open : open}}, result);
+};
+
 
 
