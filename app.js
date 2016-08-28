@@ -13,6 +13,7 @@ var signup = require('./routes/signup');
 var logout = require('./routes/logout');
 var index = require('./routes/index');
 var competitions = require('./routes/competitions');
+var myteam = require('./routes/my-team');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/signup', signup);
 app.use('/users', users);
 app.use('/logout', logout);
 app.use('/competitions', competitions);
+app.use('/myteam', myteam);
 
 // Connect to Mongo on start
 db.connect('mongodb://localhost:27017/bctest', function(err) {

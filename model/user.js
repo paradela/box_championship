@@ -14,6 +14,23 @@ exports.getUserByEmail = function(email, result) {
   db.get().collection(table_name).findOne({email : email}, result);
 };
 
+exports.getUsersById = function(ids, result) {
+  var select = {
+    $or : []
+  };
+
+  for(var i = 0; ids.length; i++) {
+    select.$or.push({_id : ObjectId(ids[i])});
+  }
+
+  db.get().collection(table_name).find(select, function(res, cursor) {
+    cursor.toArray(function (error, list) {
+      if (error != null) list = [];
+      result(list);
+    });
+  });
+};
+
 exports.insertUser = function(name, email, password, result) {
   var new_user = {
     name : name,

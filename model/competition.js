@@ -20,7 +20,12 @@ exports.createCompetition = function(name, result) {
 };
 
 exports.getCompetitions = function(result) {
-  db.get().collection(table_name).find({}, {sort: [['creation_date', 'desc']]}, result);
+  db.get().collection(table_name).find({}, {sort: [['creation_date', 'desc']]}, function(err, cursor) {
+    cursor.toArray(function (error, list) {
+      if (error != null) list = [];
+      result(list);
+    });
+  });
 };
 
 exports.getCompetitionById = function(id, result) {

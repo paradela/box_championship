@@ -16,7 +16,6 @@ block content
 
     .container
         h3 Utilizadores
-            button.btn.btn-primary.pull-right Guardar
         .table-responsive
         table.table
             thead
@@ -38,7 +37,7 @@ block content
                             td
                                 = u.email
                             td
-                                button.btn.btn-default.btn-xs Reset
+                                button.btn.btn-danger.btn-xs Reset
                             td
                                 if u.coach
                                     input(type='checkbox', onclick='updateUserRole(\'' + u._id + '\', this)', checked)
