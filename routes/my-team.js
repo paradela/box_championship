@@ -48,6 +48,8 @@ router.get('/create', function(req, res, next) {
 router.post('/create', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
     if(user != null) {
+      var cont = true;
+
       var team_name = req.body.team_name;
       var members = req.body.name;
       var competition_id = req.body.competition;
@@ -70,9 +72,11 @@ router.post('/create', function(req, res, next) {
               glassman: user.glassman
             }
           );
-          return;
         });
+        cont = false;
       }
+
+      if(!cont) return;
 
       teams.getTeamByName(team_name, function (team) {
         if(team == null) {

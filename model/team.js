@@ -65,6 +65,7 @@ exports.getUserTeams = function(user, result) {
   db.get().collection(table_name).find({team_leader_id : user._id}, {sort: [['creation_date', 'desc']]}, function(err, cursor) {
     cursor.toArray(function (error, list) {
       if (error != null) list = [];
+
       result(list);
     });
   });

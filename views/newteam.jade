@@ -9,6 +9,13 @@ block additional_header
 block content
     include navigation-bar.jade
 
+    if errors != null
+        br
+        each val in errors
+            .alert.alert-danger(role='alert')
+                = val
+
+
     h3 Escolha uma competição
 
     form#login-form(action='/myteam/create', method='post', role='form', style='display: block;')
@@ -23,12 +30,6 @@ block content
                             option(value=val._id)
                                 = val.name
 
-
-            if errors != null
-                each val in errors
-                    .isa_error
-                        i.fa.fa-times-circle
-                        = val
 
             h3 Equipa
             .input-group.input-group-sm
