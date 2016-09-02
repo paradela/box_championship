@@ -15,8 +15,15 @@ nav.navbar.navbar-default.navbar-fixed-top
                     a(href='#') Classificação
                 li
                     a(href='#') Eventos
-                li
-                    a(href='/myteam') A Minha Equipa
+                li.dropdown
+                    a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                        | Equipas
+                        span.caret
+                    ul.dropdown-menu
+                        li
+                            a(href='/myteam') As Minhas Equipas
+                        li
+                            a(href='/myteam/create') Nova Equipa
 
                 if coach != null && coach == true
                     li.dropdown

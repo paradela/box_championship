@@ -35,31 +35,31 @@ block content
         h3 Competições
             //button.btn.btn-primary.pull-right Guardar
         .table-responsive
-        table.table
-            thead
-                tr
-                    th Name
-                    th Data Criação
-                    th Equipas
-                    th Eventos
-                    th Estado
-                    th Eliminar
+            table.table
+                thead
+                    tr
+                        th Nome
+                        th Data Criação
+                        th Equipas
+                        th Eventos
+                        th Estado
+                        th Eliminar
 
-                if competition_list != null
-                    each c in competition_list
-                        tr
-                            td
-                                = c.name
-                            td
-                                = c.creation_date.getDate() + '-' + c.creation_date.getMonth() + '-' + c.creation_date.getFullYear()
-                            td
-                                a.btn.btn-primary.btn-sm(href='#') Equipas
-                            td
-                                a.btn.btn-primary.btn-sm(href='#') Eventos
-                            td
-                                if c.open
-                                    a.btn.btn-success.btn-sm(href='/competitions/set_status/' + c._id + '/false') Open
-                                else
-                                    a.btn.btn-danger.btn-sm(href='/competitions/set_status/' + c._id + '/true') Closed
-                            td
-                                a.btn.btn-danger.btn-sm(href='/competitions/delete/' + c._id) Eliminar
+                    if competition_list != null
+                        each c in competition_list
+                            tr
+                                td
+                                    = c.name
+                                td
+                                    = c.creation_date.getDate() + '-' + c.creation_date.getMonth() + '-' + c.creation_date.getFullYear()
+                                td
+                                    a.btn.btn-primary.btn-sm(href='#') Equipas
+                                td
+                                    a.btn.btn-primary.btn-sm(href='#') Eventos
+                                td
+                                    if c.open
+                                        a.btn.btn-success.btn-sm(href='/competitions/set_status/' + c._id + '/false') Open
+                                    else
+                                        a.btn.btn-danger.btn-sm(href='/competitions/set_status/' + c._id + '/true') Closed
+                                td
+                                    a.btn.btn-danger.btn-sm(href='/competitions/delete/' + c._id) Eliminar

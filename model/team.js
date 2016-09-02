@@ -12,7 +12,7 @@ exports.createTeam = function(competition_id, name, team_leader, result) {
   var team = {
     name : name,
     team_leader_id : team_leader._id,
-    members : [team_leader._id],
+    members : [team_leader.name],
     competition_id : competition_id,
     creation_date : new Date()
   };

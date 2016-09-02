@@ -1,0 +1,32 @@
+extends layout
+
+block page_title
+    title= 'Equipas'
+
+
+block additional_header
+
+block content
+    include navigation-bar.jade
+
+    .container
+
+        br
+        if errors != null
+            each val in errors
+                .alert.alert-danger(role='alert')
+                    = val
+
+        h3 Equipas
+
+        .table-responsive
+            table.table
+                thead
+                    tr
+                        th Nome
+                        th Competição
+                        th Elemento 1 (M)
+                        th Elemento 2 (M)
+                        th Elemento 3 (F)
+                        th Elemento 4 (F)
+                        th 

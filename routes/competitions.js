@@ -10,11 +10,8 @@ var competitions = require('../model/competition');
 router.get('/', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
     if (user != null && user.coach) {
-      competitions.getCompetitions(function (err, cursor) {
-        cursor.toArray(function (error, list) {
-          if (error != null) list = [];
-          res.render('competitions', {competition_list: list, user: user, coach: user.coach, glassman: user.glassman});
-        });
+      competitions.getCompetitions(function (list) {
+        res.render('competitions', {competition_list: list, user: user, coach: user.coach, glassman: user.glassman});
       });
     }
     else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});
@@ -31,25 +28,7 @@ router.post('/',function(req, res, next) {
           if(err != null || result.result.ok != 1) {
             errors.push('Erro ao criar competição.')
           }
-          competitions.getCompetitions(function (err, cursor) {
-            cursor.toArray(function (error, list) {
-              if (error != null) list = [];
-              res.render('competitions', {
-                competition_list: list,
-                errors: errors,
-                user: user,
-                coach: user.coach,
-                glassman: user.glassman
-              });
-            });
-          });
-        });
-      }
-      else {
-        var errors = ['Nome da nova competição inválido...'];
-        competitions.getCompetitions(function (err, cursor) {
-          cursor.toArray(function (error, list) {
-            if (error != null) list = [];
+          competitions.getCompetitions(function (list) {
             res.render('competitions', {
               competition_list: list,
               errors: errors,
@@ -57,6 +36,18 @@ router.post('/',function(req, res, next) {
               coach: user.coach,
               glassman: user.glassman
             });
+          });
+        });
+      }
+      else {
+        var errors = ['Nome da nova competição inválido...'];
+        competitions.getCompetitions(function (list) {
+          res.render('competitions', {
+            competition_list: list,
+            errors: errors,
+            user: user,
+            coach: user.coach,
+            glassman: user.glassman
           });
         });
       }

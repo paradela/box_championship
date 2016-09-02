@@ -1,0 +1,67 @@
+extends layout
+
+block page_title
+    title= 'As Minhas Equipas'
+
+
+block additional_header
+
+block content
+    include navigation-bar.jade
+
+    h3 Escolha uma competição
+
+    form#login-form(action='/myteam', method='post', role='form', style='display: block;')
+        .form-group
+            select.form-control(id='selectComp', name='competition' onchange='')
+                if competition_list != null
+                    each val in competition_list
+                        if selected_competition
+                            option(value=val._id, selected)
+                                = val.name
+                        else
+                            option(value=val._id)
+                                = val.name
+
+
+            if errors != null
+                each val in errors
+                    .isa_error
+                        i.fa.fa-times-circle
+                        = val
+
+            h3 Equipa
+            .input-group.input-group-sm
+                span#sizing-addon0.input-group-addon Nome da Equipa
+                input.form-control(type='text', name='team_name', placeholder='Nome', aria-describedby='sizing-addon0')
+
+
+            .row
+                .col-sm-6.col-md-6
+                    .caption
+                        h3 Membros Masculinos
+
+                        .input-group.input-group-sm
+                            span#sizing-addon1.input-group-addon Nome Membro 1
+                            input.form-control(type='text', name='name', placeholder='Nome', aria-describedby='sizing-addon1')
+
+                        .input-group.input-group-sm
+                            span#sizing-addon2.input-group-addon Nome Membro 2
+                            input.form-control(type='text', name='name', placeholder='Nome', aria-describedby='sizing-addon2')
+
+                .col-sm-6.col-md-6
+                    .caption
+
+                        h3 Membros Femininos
+
+                        .input-group.input-group-sm
+                            span#sizing-addon3.input-group-addon Nome Membro 3
+                            input.form-control(type='text', name='name', placeholder='Nome', aria-describedby='sizing-addon1')
+
+                        .input-group.input-group-sm
+                            span#sizing-addon4.input-group-addon Nome Membro 4
+                            input.form-control(type='text', name='name', placeholder='Nome', aria-describedby='sizing-addon2')
+
+
+        .btn-group
+            button.btn.btn-primary(type='submit') Registar
