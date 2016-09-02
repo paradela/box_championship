@@ -29,4 +29,23 @@ block content
                         th Elemento 2 (M)
                         th Elemento 3 (F)
                         th Elemento 4 (F)
-                        th 
+                        th
+
+                    if teams_list != null
+                        - var i = 0;
+                        each team in teams_list
+                            tr
+                                td
+                                    = team.name
+                                td
+                                    = team.competition
+                                td
+                                    = team.members[i++]
+                                td
+                                    = team.members[i++]
+                                td
+                                    = team.members[i++]
+                                td
+                                    = team.members[i++]
+                                td
+                                    a.btn.btn-danger Delete

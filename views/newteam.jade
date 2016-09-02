@@ -11,7 +11,7 @@ block content
 
     h3 Escolha uma competição
 
-    form#login-form(action='/myteam', method='post', role='form', style='display: block;')
+    form#login-form(action='/myteam/create', method='post', role='form', style='display: block;')
         .form-group
             select.form-control(id='selectComp', name='competition' onchange='')
                 if competition_list != null
@@ -39,7 +39,7 @@ block content
             .row
                 .col-sm-6.col-md-6
                     .caption
-                        h3 Membros Masculinos
+                        h3 Elementos Masculinos
 
                         .input-group.input-group-sm
                             span#sizing-addon1.input-group-addon Nome Membro 1
@@ -52,7 +52,7 @@ block content
                 .col-sm-6.col-md-6
                     .caption
 
-                        h3 Membros Femininos
+                        h3 Elementos Femininos
 
                         .input-group.input-group-sm
                             span#sizing-addon3.input-group-addon Nome Membro 3

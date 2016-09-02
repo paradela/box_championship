@@ -8,16 +8,23 @@ var users = require('./user');
 
 var table_name = 'teams';
 
-exports.createTeam = function(competition_id, name, team_leader, result) {
+exports.createTeam = function(competition_id, name, team_leader, member_names, result) {
   var team = {
     name : name,
     team_leader_id : team_leader._id,
-    members : [team_leader.name],
+    members : [],
     competition_id : competition_id,
     creation_date : new Date()
   };
 
-  db.get().collection(table_name).insertOne(team, result);
+  team.members = member_names;
+
+  db.get().collection(table_name).insertOne(team, function(err, res) {
+    if(res != null && res.result.ok == 1) {
+      result(true);
+    }
+    else result(false);
+  });
 };
 
 exports.getUserMostRecentTeam = function(user_id, result) {
@@ -30,6 +37,12 @@ exports.getUserMostRecentTeam = function(user_id, result) {
       });
     }
     else result(team);
+  });
+};
+
+exports.getTeamByName = function(team_name, result) {
+  db.get().collection(table_name).findOne({name : team_name}, function(err, doc) {
+    result(doc);
   });
 };
 
@@ -47,3 +60,12 @@ function getFilledUsers(team, result) {
     result(new_team);
   });
 }
+
+exports.getUserTeams = function(user, result) {
+  db.get().collection(table_name).find({team_leader_id : user._id}, {sort: [['creation_date', 'desc']]}, function(err, cursor) {
+    cursor.toArray(function (error, list) {
+      if (error != null) list = [];
+      result(list);
+    });
+  });
+};
