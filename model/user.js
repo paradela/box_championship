@@ -19,7 +19,7 @@ exports.getUsersById = function(ids, result) {
     $or : []
   };
 
-  for(var i = 0; ids.length; i++) {
+  for(var i = 0; i < ids.length; i++) {
     select.$or.push({_id : ObjectId(ids[i])});
   }
 

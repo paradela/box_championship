@@ -118,4 +118,33 @@ router.post('/create', function(req, res, next) {
   });
 });
 
+router.get('/delete/:teamid', function(req, res, next) {
+  cookie.verifyAuthCookie(req, function(err, user) {
+    if (user != null) {
+      var teamid = req.params.teamid;
+
+      teams.deleteTeam(teamid, function(result) {
+        var errors = [];
+        if(!result) {
+          errors.push('Failed to delete competition');
+        }
+
+        teams.getUserTeams(user, function (list) {
+          res.render('teams',
+            {
+              errors : errors,
+              teams_list : list,
+              user: user,
+              coach: user.coach,
+              glassman: user.glassman
+            }
+          );
+        });
+
+      });
+    }
+    else res.redirect('/login');
+  });
+});
+
 module.exports = router;

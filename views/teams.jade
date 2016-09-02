@@ -32,13 +32,13 @@ block content
                         th
 
                     if teams_list != null
-                        - var i = 0;
                         each team in teams_list
+                            - var i = 0;
                             tr
                                 td
                                     = team.name
                                 td
-                                    = team.competition
+                                    = team.competition.name
                                 td
                                     = team.members[i++]
                                 td
@@ -48,4 +48,4 @@ block content
                                 td
                                     = team.members[i++]
                                 td
-                                    a.btn.btn-danger.btn-xs Delete
+                                    a.btn.btn-danger.btn-xs(href='/myteam/delete/' + team._id) Eliminar

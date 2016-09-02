@@ -32,6 +32,23 @@ exports.getCompetitionById = function(id, result) {
   db.get().collection(table_name).find({_id: ObjectId(id)}, result);
 };
 
+exports.getCompetitionByIds = function(ids, result) {
+  var select = {
+    $or : []
+  };
+
+  for(var i = 0; i < ids.length; i++) {
+    select.$or.push({_id : ObjectId(ids[i])});
+  }
+
+  db.get().collection(table_name).find(select, function (res, cursor) {
+    cursor.toArray(function (error, list) {
+      if (error != null) list = [];
+      result(list);
+    });
+  });
+};
+
 exports.deleteCompetitionById = function(id, result) {
   this.getCompetitionById(id, function(err, comp){
     if(comp != null) {
