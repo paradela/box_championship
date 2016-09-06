@@ -1,0 +1,41 @@
+//
+   Created by Ricardo on 06/09/2016.
+
+extends layout
+
+block page_title
+    title= 'Equipas Inscritas'
+
+
+block additional_header
+
+block content
+    include navigation-bar.jade
+
+    .container
+
+        h3
+            =competition.name
+        h4 Equipas
+        .table-responsive
+            table.table
+                thead
+                    tr
+                        th Nome
+                        th Membros
+                        th Estado
+
+                    if team_list != null
+                        each t in team_list
+                            tr
+                                td
+                                    = t.name
+                                td
+                                    - var first = true;
+                                    each m in t.members
+                                        if !first
+                                            = ', '
+                                        = m
+                                        - first = false
+                                td
+                                    a.btn.btn-success(href='#') Cenas

@@ -89,10 +89,19 @@ exports.getUserTeams = function(user, result) {
   });
 };
 
+exports.getTeamsByCompetition = function(competition_id, result) {
+  db.get().collection(table_name).find({competition_id : competition_id}, function(err, cursor) {
+    cursor.toArray(function (error, list) {
+      if (error != null) list = [];
+      result(list);
+    });
+  });
+};
+
 exports.deleteTeam = function(teamid, result) {
   db.get().collection(table_name).deleteOne({_id: ObjectId(teamid)}, function(err, res) {
     if(res != null && res.result.ok == 1)
-      result(true)
+      result(true);
     else result(false);
   });
 };

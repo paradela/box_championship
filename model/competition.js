@@ -29,7 +29,7 @@ exports.getCompetitions = function(result) {
 };
 
 exports.getCompetitionById = function(id, result) {
-  db.get().collection(table_name).find({_id: ObjectId(id)}, result);
+  db.get().collection(table_name).findOne({_id: ObjectId(id)}, result);
 };
 
 exports.getCompetitionByIds = function(ids, result) {

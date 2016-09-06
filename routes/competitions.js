@@ -6,6 +6,7 @@ var router = express.Router();
 
 var cookie = require('../helper/cookies');
 var competitions = require('../model/competition');
+var teams = require('../model/team');
 
 router.get('/', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
@@ -91,6 +92,64 @@ router.get('/set_status/:id/:open', function(req, res, next){
         });
       }
       else res.status(400).render('error', {message: 'Bad input data', error: {status: 400, stack: []}})
+    }
+    else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});
+  });
+});
+
+router.get('/:competition_id/teams', function(req, res, next) {
+  cookie.verifyAuthCookie(req, function(err, user) {
+    if (user != null && user.coach) {
+      var competition_id = req.params.competition_id;
+      teams.getTeamsByCompetition(competition_id, function(list) {
+        competitions.getCompetitionById(competition_id, function(error, comp) {
+          if(error == null){
+            res.render('competition_teams', {
+              competition : comp,
+              team_list : list,
+              user: user,
+              coach: user.coach,
+              glassman: user.glassman});
+          }
+          else res.status(400).render('error', {message: 'Invalid competition', error: {status: 400, stack: []}})
+        });
+      });
+    }
+    else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});
+  });
+});
+
+router.post('/team/:team_id/:status', function(req, res, next) {
+  cookie.verifyAuthCookie(req, function(err, user) {
+    if (user != null && user.coach) {
+      //todo
+    }
+    else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});
+  });
+});
+
+router.get('/:competition_id/events', function(req, res, next) {
+  cookie.verifyAuthCookie(req, function(err, user) {
+    if (user != null && user.coach) {
+      //todo
+    }
+    else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});
+  });
+});
+
+router.post('/:competition_id/event', function(req, res, next) {
+  cookie.verifyAuthCookie(req, function(err, user) {
+    if (user != null && user.coach) {
+      //todo
+    }
+    else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});
+  });
+});
+
+router.get('/delete/event/:event_id', function(req, res, next) {
+  cookie.verifyAuthCookie(req, function(err, user) {
+    if (user != null && user.coach) {
+      //todo
     }
     else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});
   });
