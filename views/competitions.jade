@@ -55,7 +55,7 @@ block content
                                 td
                                     a.btn.btn-primary.btn-sm(href='/competitions/' + c._id + '/teams') Equipas
                                 td
-                                    a.btn.btn-primary.btn-sm(href='#') Eventos
+                                    a.btn.btn-primary.btn-sm(href='/competitions/' + c._id + '/events') Eventos
                                 td
                                     if c.open
                                         a.btn.btn-success.btn-sm(href='/competitions/set_status/' + c._id + '/false') Open

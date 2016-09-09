@@ -1,0 +1,77 @@
+//
+   Created by Ricardo on 14/08/2016.
+
+
+extends layout
+
+block page_title
+    title= 'Eventos'
+
+
+block additional_header
+
+block content
+    include navigation-bar.jade
+
+    .container
+
+        br
+        if errors != null
+            each val in errors
+                .alert.alert-danger(role='alert')
+                    = val
+        button.btn.btn-primary(type='button', onclick='$("#new_event").toggleClass(\'hidden\');') Novo Evento
+
+        form#login-form(action='/competitions/' + competition._id + '/event', method='post', role='form', style='display: block;')
+            .hidden(id='new_event')
+                br
+                .form-group
+                    input.form-control(type='text', name='name', placeholder='Nome da Nova Competição')
+
+                .row
+                    .col-sm-6.col-md-6
+                        .form-group
+                            .input-group
+                                span#sizing-addon1.input-group-addon Início
+                                input.form-control(type='date', name='date_start', placeholder='Data de Início', aria-describedby='sizing-addon1')
+                    .col-sm-6.col-md-6
+                        .form-group
+                            .input-group
+                                span#sizing-addon2.input-group-addon Fim
+                                input.form-control(type='date', name='date_end', placeholder='Data de Fim', aria-describedby='sizing-addon2')
+                .form-group
+                    textarea.form-control(name='description', placeholder='Descrição do Evento', rows='10')
+
+                .form-group
+                    textarea.form-control(name='notes', placeholder='Notas', rows='10')
+                .btn-group
+                    button.btn.btn-success(type='submit') Submeter
+
+
+
+
+
+        h3
+            =competition.name
+        h4 Eventos
+            //button.btn.btn-primary.pull-right Guardar
+        .table-responsive
+            table.table
+                thead
+                    tr
+                        th Nome
+                        th Data Criação
+                        th Descrição
+                        th
+
+                    if event_list != null
+                        each c in event_list
+                            tr
+                                td
+                                    = c.name
+                                td
+                                    = c.creation_date.getDate() + '-' + c.creation_date.getMonth() + '-' + c.creation_date.getFullYear()
+                                td
+                                    = c.description
+                                td
+                                    a.btn.btn-danger.btn-sm(href='#') Eliminar

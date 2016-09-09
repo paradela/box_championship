@@ -13,12 +13,10 @@ exports.createTeam = function(competition_id, name, team_leader, member_names, r
   var team = {
     name : name,
     team_leader_id : team_leader._id,
-    members : [],
+    members : member_names,
     competition_id : competition_id,
     creation_date : new Date()
   };
-
-  team.members = member_names;
 
   db.get().collection(table_name).insertOne(team, function(err, res) {
     if(res != null && res.result.ok == 1) {

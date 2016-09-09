@@ -7,6 +7,7 @@ var router = express.Router();
 var cookie = require('../helper/cookies');
 var competitions = require('../model/competition');
 var teams = require('../model/team');
+var events = require('../model/event');
 
 router.get('/', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
@@ -131,7 +132,20 @@ router.post('/team/:team_id/:status', function(req, res, next) {
 router.get('/:competition_id/events', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
     if (user != null && user.coach) {
-      //todo
+      var competition_id = req.params.competition_id;
+      events.getEventsByCompetition(competition_id, function(list) {
+        competitions.getCompetitionById(competition_id, function(error, comp) {
+          if(error == null){
+            res.render('competition_events', {
+              competition : comp,
+              event_list : list,
+              user: user,
+              coach: user.coach,
+              glassman: user.glassman});
+          }
+          else res.status(400).render('error', {message: 'Invalid competition', error: {status: 400, stack: []}})
+        });
+      });
     }
     else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});
   });
