@@ -14,6 +14,8 @@ var logout = require('./routes/logout');
 var index = require('./routes/index');
 var competitions = require('./routes/competitions');
 var myteam = require('./routes/my-team');
+var events = require('./routes/events');
+var classification = require('./routes/classification');
 
 var app = express();
 
@@ -36,6 +38,8 @@ app.use('/users', users);
 app.use('/logout', logout);
 app.use('/competitions', competitions);
 app.use('/myteam', myteam);
+app.use('/events', events);
+app.use('/classification', classification);
 
 var dburl = process.env.MONGODB_URL;
 

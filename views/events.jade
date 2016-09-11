@@ -1,0 +1,49 @@
+//
+   Created by Ricardo on 11/09/2016.
+
+extends layout
+
+block page_title
+    title= 'Eventos'
+
+
+block additional_header
+    //link(rel='stylesheet', href='/stylesheets/index.css')
+
+block content
+
+    include navigation-bar.jade
+
+    .container-fluid
+        if events == null
+            br
+            center
+                h3 Ainda não foram registados eventos... :(
+        else
+            .row
+                .col-xs-12.col-md-2.sidebar
+                    br
+                    h3 Eventos
+
+                    ul.nav.nav-sidebar
+                        if events != null
+                            each ev in events
+                                - var klass = (ev._id == event._id)? 'active' : '';
+                                li(class=klass)
+                                    a(href='/events/' + ev._id)
+                                        = ev.name
+
+                .col-xs-12.col-md-8
+                    h1
+                        = event.name
+
+                    h3 Descrição
+
+                    p
+                        = event.description
+
+                    if event.notes != ''
+                        h3 Notes
+
+                        p
+                            = event.notes

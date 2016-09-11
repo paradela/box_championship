@@ -43,9 +43,11 @@ block content
                                 input.form-control(type='date', name='date_end', placeholder='Data de Fim', aria-describedby='sizing-addon2')
                 .form-group
                     textarea.form-control(name='description', placeholder='Descrição do Evento', rows='10')
+                        = fields.description
 
                 .form-group
                     textarea.form-control(name='notes', placeholder='Notas', rows='10')
+                        = fields.notes
                 .btn-group
                     button.btn.btn-success(type='submit') Submeter
 
@@ -60,8 +62,8 @@ block content
                 thead
                     tr
                         th Nome
-                        th Data Criação
-                        th Descrição
+                        th Início
+                        th Fim
                         th
 
                     if event_list != null
@@ -70,8 +72,8 @@ block content
                                 td
                                     = c.name
                                 td
-                                    = c.creation_date.getDate() + '-' + c.creation_date.getMonth() + '-' + c.creation_date.getFullYear()
+                                    = c.date_start.getDate() + '-' + c.date_start.getMonth() + '-' + c.date_start.getFullYear()
                                 td
-                                    = c.description
+                                    = c.date_end.getDate() + '-' + c.date_end.getMonth() + '-' + c.date_end.getFullYear()
                                 td
-                                    a.btn.btn-danger.btn-sm(href='#') Eliminar
+                                    a.btn.btn-danger.btn-sm(href='/competitions/' + competition._id + '/' + c._id + '/delete') Eliminar

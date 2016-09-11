@@ -27,11 +27,23 @@ exports.createEvent = function(competition_id, name, description, notes, date_st
 };
 
 exports.getEventsByCompetition = function(competition_id, result) {
-  db.get().collection(table_name).find({competition_id : competition_id}, function(err, cursor) {
+  db.get().collection(table_name).find({"competition_id" : competition_id.toString()}, function(err, cursor) {
     cursor.toArray(function (error, list) {
       if (error != null) list = [];
       result(list);
     });
+  });
+};
+
+exports.getEventById = function(event_id, result) {
+  db.get().collection(table_name).findOne({_id : ObjectId(event_id)}, function(err, doc) {
+    result(doc);
+  });
+};
+
+exports.getLastestEvent = function(competition_id, result) {
+  db.get().collection(table_name).findOne({"competition_id" : competition_id.toString()}, {sort: [['date_start', 'desc']]}, function(err, doc) {
+    result(doc);
   });
 };
 

@@ -191,21 +191,28 @@ router.post('/:competition_id/event', function(req, res, next) {
       var date_end = req.body.date_end;
       var description = req.body.description;
       var notes = req.body.notes;
-
-      //FIXME date-start-end needs to be converted from string to Date...
+      var ts_date_start;
+      var ts_date_end;
 
       try {
         if(name == null || name == '') throw 'O nome do evento tem de estar preenchido.';
         if(date_begin == null || date_begin == '') throw 'A data de início tem de estar preenchida.';
+        ts_date_start = Date.parse(date_begin);
         if(date_end == null || date_end == '') throw 'Data de fim tem de estar preenchida.';
-        if(description == null || description == '') throw 'Tem de ser dada uma descrição do evento.'
+        ts_date_end = Date.parse(date_end);
+        if(ts_date_start > ts_date_end) throw 'A data de fim não pode ser anterior à data de início.';
+        if(description == null || description == '') throw 'Tem de ser dada uma descrição do evento.';
+
       }
       catch (exception) {
         renderCompetitionEvents(competition_id, res, name, description, notes, exception, user);
         return;
       }
 
-      events.createEvent(competition_id, name, description, notes, date_begin, date_end, function(ok) {
+      var begin = new Date(ts_date_start);
+      var end = new Date(ts_date_end);
+
+      events.createEvent(competition_id, name, description, notes, begin, end, function(ok) {
         if(ok) res.redirect('/competitions/' + competition_id + '/events');
         else {
           renderCompetitionEvents(competition_id, res, name, description, notes, 'Falha na criação do evento...', user);
