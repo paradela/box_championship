@@ -17,41 +17,56 @@ block content
     ol.carousel-indicators
       li.active(data-target='#myCarousel', data-slide-to='0')
       li(data-target='#myCarousel', data-slide-to='1')
-      li(data-target='#myCarousel', data-slide-to='2')
     .carousel-inner(role='listbox')
       .item.active
-        img.first-slide(src='/images/img1_400.png', alt='First slide')
+        img.first-slide(src='/images/c2f.jpg', alt='First slide')
         .container
           .carousel-caption
-            h1 Example headline.
             p
-              | Note: If you're viewing this page via a
-              code file://
-              |  URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.
-            p
-              a.btn.btn-lg.btn-primary(href='#', role='button') Sign up today
+              a.btn.btn-lg.btn-primary(href='#', role='button') Inscreve-te já!
       .item
-        img.second-slide(src='/images/img2.jpg', alt='Second slide')
+        img.second-slide(src='/images/box.jpg', alt='Second slide')
         .container
           .carousel-caption
-            h1 Another example headline.
             p
-              | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-            p
-              a.btn.btn-lg.btn-primary(href='#', role='button') Learn more
-      .item
-        img.third-slide(src='data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==', alt='Third slide')
-        .container
-          .carousel-caption
-            h1 One more for good measure.
-            p
-              | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-            p
-              a.btn.btn-lg.btn-primary(href='#', role='button') Browse gallery
+              a.btn.btn-lg.btn-primary(href='#', role='button') Inscreve-te já!
     a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
       span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
       span.sr-only Previous
     a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
       span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
       span.sr-only Next
-  // /.carousel
+
+
+  .container
+    // Jumbotron
+    .jumbotron
+      h1 Crosstwofit Team WOD Competition
+      p.lead
+        | Faz a tua equipa e vem mostrar o teu lado competitivo, quer sejas iniciante ou veterano!
+      p
+        a.btn.btn-lg.btn-success(href='#', role='button') Inscreve-te já!
+    .row.marketing
+      .col-lg-6
+        h3 Equipas
+        p
+          | Equipas compostas por quatro elementos, dois masculinos e dois femininos!
+
+        h3 Duração
+        p
+          | A competição terá início em Outubro e ocorrerá na tua box Crosstwofit todas as quintas-feiras às 20h15 até ao mês de Dezembro.
+
+      .col-lg-6
+        h3 Inscrição
+        p
+          | O preço de inscrição por equipa é de 20€ (5€/membro), a serem pagos na box.
+
+        h3 Equipamento
+        p
+          | É obrigatório cada equipa ter equipamento próprio com o respectivo nome!
+
+    .marketing
+      h3 Informações
+      p
+        | Para mais informações contacta a nossa página no Facebook
+      a(href='https://www.facebook.com/crosstwofit/') facebook.com/crosstwofit
