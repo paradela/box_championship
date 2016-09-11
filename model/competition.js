@@ -19,6 +19,12 @@ exports.createCompetition = function(name, result) {
   db.get().collection(table_name).insertOne(competition, result);
 };
 
+exports.getLatestCompetition = function(result) {
+  db.get().collection(table_name).findOne({open: true}, {sort: [['creation_date', 'desc']]}, function(error, doc) {
+    result(doc);
+  });
+};
+
 exports.getCompetitions = function(result) {
   db.get().collection(table_name).find({}, {sort: [['creation_date', 'desc']]}, function(err, cursor) {
     cursor.toArray(function (error, list) {

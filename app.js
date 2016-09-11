@@ -37,15 +37,12 @@ app.use('/logout', logout);
 app.use('/competitions', competitions);
 app.use('/myteam', myteam);
 
-var db_user_name = process.env.MONGODB_USER_NAME;
-var db_password = process.env.MONGODB_PASSWORD;
-var dburl = '';
+var dburl = process.env.MONGODB_URL;
 
-if(db_user_name == null || db_password == null)
+if(dburl == null)
   dburl = 'mongodb://localhost:27017/bctest';
-else dburl = 'mongodb://' + db_user_name + ':' + db_password + '@ds019986.mlab.com:19986/c2f-tc-db';
-// Connect to Mongo on start
 
+// Connect to Mongo on start
 db.connect(dburl, function(err) {
   if (err) {
     console.log('Unable to connect to Mongo.');
