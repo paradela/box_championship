@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var db = require('./db')
+var db = require('./db');
 
 var users = require('./routes/users');
 var login = require('./routes/login');
@@ -37,8 +37,16 @@ app.use('/logout', logout);
 app.use('/competitions', competitions);
 app.use('/myteam', myteam);
 
+var db_user_name = process.env.MONGODB_USER_NAME;
+var db_password = process.env.MONGODB_PASSWORD;
+var dburl = '';
+
+if(db_user_name == null || db_password == null)
+  dburl = 'mongodb://localhost:27017/bctest';
+else dburl = 'mongodb://' + db_user_name + ':' + db_password + '@ds019986.mlab.com:19986/c2f-tc-db';
 // Connect to Mongo on start
-db.connect('mongodb://localhost:27017/bctest', function(err) {
+
+db.connect(dburl, function(err) {
   if (err) {
     console.log('Unable to connect to Mongo.');
   }
