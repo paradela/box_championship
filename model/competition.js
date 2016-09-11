@@ -61,7 +61,7 @@ exports.deleteCompetitionById = function(id, result) {
       //TODO: delete teams and events
       db.get().collection(table_name).deleteOne({_id: ObjectId(id)}, function(err, res) {
         if(res != null && res.result.ok == 1)
-          result(true)
+          result(true);
         else result(false);
       });
     }

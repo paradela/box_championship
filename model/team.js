@@ -15,7 +15,8 @@ exports.createTeam = function(competition_id, name, team_leader, member_names, r
     team_leader_id : team_leader._id,
     members : member_names,
     competition_id : competition_id,
-    creation_date : new Date()
+    creation_date : new Date(),
+    approved: false
   };
 
   db.get().collection(table_name).insertOne(team, function(err, res) {
@@ -43,6 +44,12 @@ exports.getTeamByName = function(team_name, result) {
   db.get().collection(table_name).findOne({name : team_name}, function(err, doc) {
     result(doc);
   });
+};
+
+exports.getTeamById = function(team_id, result) {
+  db.get().collection(table_name).findOne({_id: ObjectId(team_id)}, function(err, doc) {
+    result(doc);
+  })
 };
 
 /*function getFilledUsers(team, result) {
@@ -102,4 +109,10 @@ exports.deleteTeam = function(teamid, result) {
       result(true);
     else result(false);
   });
+};
+
+exports.setTeamStatus = function(team_id, status, result) {
+  db.get().collection(table_name).update({_id: ObjectId(team_id)}, {$set : {approved : status}}, function(err, res) {
+    result(err == null);
+  })
 };

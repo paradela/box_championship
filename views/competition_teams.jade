@@ -38,4 +38,7 @@ block content
                                         = m
                                         - first = false
                                 td
-                                    a.btn.btn-success(href='#') Cenas
+                                    if t.approved
+                                        a.btn.btn-success(href='/competitions/team/' + t._id + '/change_status') APROVADA
+                                    else
+                                        a.btn.btn-danger(href='/competitions/team/' + t._id + '/change_status') PENDENTE

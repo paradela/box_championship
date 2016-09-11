@@ -29,6 +29,7 @@ block content
                         th Elemento 2 (M)
                         th Elemento 3 (F)
                         th Elemento 4 (F)
+                        th Estado
                         th
 
                     if teams_list != null
@@ -47,5 +48,11 @@ block content
                                     = team.members[i++]
                                 td
                                     = team.members[i++]
+                                td
+                                    if team.approved
+                                        | APROVADA
+                                    else
+                                        | PENDENTE
+
                                 td
                                     a.btn.btn-danger.btn-xs(href='/myteam/delete/' + team._id) Eliminar

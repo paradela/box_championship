@@ -7,12 +7,12 @@ var ObjectId = require('mongodb').ObjectID;
 
 var table_name = 'events';
 
-exports.createEvent = function(competition_id, name, type, description, date_start, date_end, result) {
+exports.createEvent = function(competition_id, name, description, notes, date_start, date_end, result) {
   var event = {
     competition_id : competition_id,
     name : name,
-    type : type,
     description : description,
+    notes: notes,
     date_start : date_start,
     date_end : date_end,
     classifications : []
@@ -35,3 +35,10 @@ exports.getEventsByCompetition = function(competition_id, result) {
   });
 };
 
+exports.deleteEventById = function(event_id, result) {
+  db.get().collection(table_name).deleteOne({_id : ObjectId(event_id)}, function(err, res) {
+    if(res != null && res.result.ok == 1)
+      result(true);
+    else result(false);
+  });
+};

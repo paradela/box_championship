@@ -20,16 +20,9 @@ block content
     .carousel-inner(role='listbox')
       .item.active
         img.first-slide(src='/images/c2f.jpg', alt='First slide')
-        .container
-          .carousel-caption
-            p
-              a.btn.btn-lg.btn-primary(href='/myteam/create', role='button') Inscreve já a tua equipa!
       .item
         img.second-slide(src='/images/box.jpg', alt='Second slide')
-        .container
-          .carousel-caption
-            p
-              a.btn.btn-lg.btn-primary(href='/myteam/create', role='button') Inscreve já a tua equipa!
+
     a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
       span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
       span.sr-only Previous
@@ -38,14 +31,14 @@ block content
       span.sr-only Next
 
 
-  .container
+  .container-fluid
     // Jumbotron
     .jumbotron
       h1 Crosstwofit Team WOD Competition
       p.lead
         | Faz a tua equipa e vem mostrar o teu lado competitivo, quer sejas iniciante ou veterano!
       p
-        a.btn.btn-lg.btn-success(href='/myteam/create', role='button') Inscreve já a tua equipa!
+        a.btn.btn-lg.btn-success(href='/myteam/create', role='button') Inscreve a tua equipa!
     .row.marketing
       .col-lg-6
         h3 Equipas
