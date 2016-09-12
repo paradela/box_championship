@@ -18,13 +18,13 @@ block content
             =competition.name
         h4 Equipas
         .table-responsive
-            table.table
+            table.table.table-striped
                 thead
                     tr
                         th Nome
                         th Membros
                         th Estado
-
+                tbody
                     if team_list != null
                         each t in team_list
                             tr

@@ -58,14 +58,14 @@ block content
         h4 Eventos
             //button.btn.btn-primary.pull-right Guardar
         .table-responsive
-            table.table
+            table.table.table-striped
                 thead
                     tr
                         th Nome
                         th Início
                         th Fim
                         th
-
+                tbody
                     if event_list != null
                         each c in event_list
                             tr

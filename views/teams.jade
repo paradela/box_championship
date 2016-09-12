@@ -20,7 +20,7 @@ block content
         h3 Equipas
 
         .table-responsive
-            table.table
+            table.table.table-striped
                 thead
                     tr
                         th Nome
@@ -32,6 +32,7 @@ block content
                         th Estado
                         th
 
+                    tbody
                     if teams_list != null
                         each team in teams_list
                             - var i = 0;

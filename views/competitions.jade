@@ -35,7 +35,7 @@ block content
         h3 Competições
             //button.btn.btn-primary.pull-right Guardar
         .table-responsive
-            table.table
+            table.table.table-striped
                 thead
                     tr
                         th Nome
@@ -44,7 +44,7 @@ block content
                         th Eventos
                         th Estado
                         th Eliminar
-
+                tbody
                     if competition_list != null
                         each c in competition_list
                             tr

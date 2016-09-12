@@ -16,6 +16,33 @@ block content
 
     .container-fluid
 
-        br
-        center
-            h3 Ainda não existem classificações :(
+        if classifications == null
+            br
+            center
+                h3 Ainda não existem classificações :(
+        else
+            .table-responsive
+                table.table.table-striped
+                    thead
+                        tr
+                            th #
+                            th Equipa
+                            each ev in classifications.events
+                                th
+                                    = ev
+                    tbody
+                            each result in classifications.team_results
+                                tr
+                                    td
+                                        = result.place
+                                        | (
+                                        = result.points
+                                        | )
+                                    td
+                                        = result.team_name
+                                    each ev in result.team_events
+                                        td
+                                            = ev.place
+                                            | (
+                                            = ev.result
+                                            | )

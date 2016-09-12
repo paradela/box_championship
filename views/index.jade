@@ -17,11 +17,14 @@ block content
     ol.carousel-indicators
       li.active(data-target='#myCarousel', data-slide-to='0')
       li(data-target='#myCarousel', data-slide-to='1')
+      li(data-target='#myCarousel', data-slide-to='2')
     .carousel-inner(role='listbox')
       .item.active
         img.first-slide(src='/images/c2f.jpg', alt='First slide')
       .item
         img.second-slide(src='/images/box.jpg', alt='Second slide')
+      .item
+        img.third-slide(src='/images/c2f_respect.jpg', alt='Third Slide')
 
     a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
       span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
@@ -38,7 +41,7 @@ block content
       p.lead
         | Faz a tua equipa e vem mostrar o teu lado competitivo, quer sejas iniciante ou veterano!
       p
-        a.btn.btn-lg.btn-success(href='/myteam/create', role='button') Inscreve a tua equipa!
+        a.btn.btn-success.btn-lg(href='/myteam/create', role='button') Inscreve a tua equipa!
     .row.marketing
       .col-lg-6
         h3 Equipas

@@ -17,34 +17,35 @@ block content
     .container
         h3 Utilizadores
         .table-responsive
-        table.table
-            thead
-                tr
-                    th ID
-                    th Name
-                    th Email
-                    th Reset Password
-                    th Coach
-                    th Active
+            table.table.table-striped
+                thead
+                    tr
+                        th ID
+                        th Name
+                        th Email
+                        th Reset Password
+                        th Coach
+                        th Active
 
-                if user_list != null
-                    each u in user_list
-                        tr
-                            td
-                                = u._id
-                            td
-                                = u.name
-                            td
-                                = u.email
-                            td
-                                button.btn.btn-danger.btn-xs Reset
-                            td
-                                if u.coach
-                                    input(type='checkbox', onclick='updateUserRole(\'' + u._id + '\', this)', checked)
-                                else
-                                    input(type='checkbox', onclick='updateUserRole(\'' + u._id + '\', this)')
-                            td
-                                if u.active
-                                    input(type='checkbox', onclick='updateUserStatus(\'' + u._id + '\', this)', checked)
-                                else
-                                    input(type='checkbox', onclick='updateUserStatus(\'' + u._id + '\', this)')
+                tbody
+                    if user_list != null
+                        each u in user_list
+                            tr
+                                td
+                                    = u._id
+                                td
+                                    = u.name
+                                td
+                                    = u.email
+                                td
+                                    button.btn.btn-danger.btn-xs Reset
+                                td
+                                    if u.coach
+                                        input(type='checkbox', onclick='updateUserRole(\'' + u._id + '\', this)', checked)
+                                    else
+                                        input(type='checkbox', onclick='updateUserRole(\'' + u._id + '\', this)')
+                                td
+                                    if u.active
+                                        input(type='checkbox', onclick='updateUserStatus(\'' + u._id + '\', this)', checked)
+                                    else
+                                        input(type='checkbox', onclick='updateUserStatus(\'' + u._id + '\', this)')
