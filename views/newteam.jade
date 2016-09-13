@@ -16,13 +16,20 @@ block content
                 = val
 
 
-    h2 Inscreva a sua equipa
+    h3 Escolha uma competição
 
-    h4
-        =competition.name
-
-    form#login-form(action='/myteam/create/' + competition._id, method='post', role='form', style='display: block;')
+    form#login-form(action='/myteam/create', method='post', role='form', style='display: block;')
         .form-group
+            select.form-control(id='selectComp', name='competition' onchange='')
+                if competition_list != null
+                    each val in competition_list
+                        if selected_competition
+                            option(value=val._id, selected)
+                                = val.name
+                        else
+                            option(value=val._id)
+                                = val.name
+
 
             h3 Equipa
             .input-group.input-group-sm

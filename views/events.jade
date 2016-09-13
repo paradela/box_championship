@@ -39,11 +39,9 @@ block content
 
                     h3 Descrição
 
-                    p
-                        = event.description
+                    p !{event.description.replace(/\r\n/g, '<br/>')}
 
                     if event.notes != ''
                         h3 Notas
 
-                        p
-                            = event.notes
+                        p !{event.notes.replace(/\r\n/g, '<br/>')}

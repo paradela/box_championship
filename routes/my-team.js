@@ -30,10 +30,10 @@ router.get('/', function(req, res, next) {
 router.get('/create', function(req, res, next) {
   cookie.verifyAuthCookie(req, function (err, user) {
     if(user != null) {
-      competitions.getLatestCompetition(function (competition) {
+      competitions.getCompetitions(function (list) {
         res.render('newteam',
           {
-            competition: competition,
+            competition_list : list,
             user: user,
             coach: user.coach,
             glassman: user.glassman
@@ -45,14 +45,14 @@ router.get('/create', function(req, res, next) {
   });
 });
 
-router.post('/create/:competition_id', function(req, res, next) {
+router.post('/create', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
     if(user != null) {
       var cont = true;
 
       var team_name = req.body.team_name;
       var members = req.body.name;
-      var competition_id = req.params.competition_id;
+      var competition_id = req.body.competition;
 
       try {
         if(team_name == null || team_name == '') throw 'Nome de Equipa inválido.';
@@ -62,11 +62,11 @@ router.post('/create/:competition_id', function(req, res, next) {
         }
       }
       catch(error) {
-        competitions.getLatestCompetition(function (comp) {
+        competitions.getCompetitions(function (list) {
           res.render('newteam',
             {
               errors : [error],
-              competition: comp,
+              competition_list : list,
               user: user,
               coach: user.coach,
               glassman: user.glassman
@@ -85,11 +85,11 @@ router.post('/create/:competition_id', function(req, res, next) {
               res.redirect('/myteam');
             }
             else {
-              competitions.getLatestCompetition(function (comp) {
+              competitions.getCompetitions(function (list) {
                 res.render('newteam',
                   {
                     errors : ['Erro na criação da equipa.'],
-                    competition: comp,
+                    competition_list : list,
                     user: user,
                     coach: user.coach,
                     glassman: user.glassman
@@ -100,11 +100,11 @@ router.post('/create/:competition_id', function(req, res, next) {
           });
         }
         else {
-          competitions.getLatestCompetition(function (comp) {
+          competitions.getCompetitions(function (list) {
             res.render('newteam',
               {
                 errors: ['Nome da equipa já está registado.'],
-                competition: comp,
+                competition_list: list,
                 user: user,
                 coach: user.coach,
                 glassman: user.glassman
