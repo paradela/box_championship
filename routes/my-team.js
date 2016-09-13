@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
 router.get('/create', function(req, res, next) {
   cookie.verifyAuthCookie(req, function (err, user) {
     if(user != null) {
-      competitions.getCompetitions(function (list) {
+      competitions.getOpenCompetitions(function (list) {
         res.render('newteam',
           {
             competition_list : list,
@@ -62,7 +62,7 @@ router.post('/create', function(req, res, next) {
         }
       }
       catch(error) {
-        competitions.getCompetitions(function (list) {
+        competitions.getOpenCompetitions(function (list) {
           res.render('newteam',
             {
               errors : [error],
@@ -85,7 +85,7 @@ router.post('/create', function(req, res, next) {
               res.redirect('/myteam');
             }
             else {
-              competitions.getCompetitions(function (list) {
+              competitions.getOpenCompetitions(function (list) {
                 res.render('newteam',
                   {
                     errors : ['Erro na criação da equipa.'],
@@ -100,7 +100,7 @@ router.post('/create', function(req, res, next) {
           });
         }
         else {
-          competitions.getCompetitions(function (list) {
+          competitions.getOpenCompetitions(function (list) {
             res.render('newteam',
               {
                 errors: ['Nome da equipa já está registado.'],

@@ -34,6 +34,15 @@ exports.getCompetitions = function(result) {
   });
 };
 
+exports.getOpenCompetitions = function(result) {
+  db.get().collection(table_name).find({open : true}, {sort: [['creation_date', 'desc']]}, function(err, cursor) {
+    cursor.toArray(function (error, list) {
+      if (error != null) list = [];
+      result(list);
+    });
+  });
+};
+
 exports.getCompetitionById = function(id, result) {
   db.get().collection(table_name).findOne({_id: ObjectId(id)}, result);
 };

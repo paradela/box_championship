@@ -51,9 +51,9 @@ block content
                                     = team.members[i++]
                                 td
                                     if team.approved
-                                        | APROVADA
+                                        .label.label-success APROVADA
                                     else
-                                        | PENDENTE
+                                        .label.label-danger PENDENTE
 
                                 td
                                     a.btn.btn-danger.btn-xs(href='/myteam/delete/' + team._id) Eliminar
