@@ -15,7 +15,7 @@ exports.createEvent = function(competition_id, name, description, notes, date_st
     notes: notes,
     date_start : date_start,
     date_end : date_end,
-    classifications : []
+    classifications : [] /* {team_id : '12312eqwd23', result: '454', rx : true } */
   };
 
   db.get().collection(table_name).insertOne(event, function(err, res) {

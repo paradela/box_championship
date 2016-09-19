@@ -253,26 +253,110 @@ router.get('/:competition_id/:event_id/delete', function(req, res, next) {
   });
 });
 
-router.get('/results', function(req, res, next) {
+router.get('/results/:competition_id?', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
     if (user != null && user.coach) {
-      competitions.getOpenCompetitions(function(comps) {
-        async.each(comps, function(item, callback) {
-          events.getEventsByCompetition(item._id, function(events_list) {
-            async.each(events_list, function(event_item, event_callback) {
-              teams.getTeamById(event_item.classifications.team_id, function(team) {
+      var competition_id = req.params.competition_id;
+      var redirectForComp = function(comp) {
+        if(comp != null)
+          events.getLastestEvent(comp._id, function(event) {
+            var url = '/competitions/' + comp._id + '/results/';
+            if(event != null)
+              url += event._id;
+            res.redirect(url);
+          });
+        else res.redirect('/competitions/results');
+      };
 
-              });
-            },
-            function(err) {
+      if(competition_id == null)
+        competitions.getLatestCompetition(function(comp) {
+          redirectForComp(comp);
+        });
+      else competitions.getCompetitionById(competition_id, function(err, comp) {
+        redirectForComp(comp);
+      });
+    }
+    else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});
+  });
+});
 
-            });
+router.get('/:competition_id/results/:event_id?', function(req, res, next) {
+  cookie.verifyAuthCookie(req, function(err, user) {
+    if (user != null && user.coach) {
+      var competition_id = req.params.competition_id;
+      var event_id = req.params.event_id;
+
+      async.parallel([
+        function (callback) {
+          competitions.getCompetitionById(competition_id, function(err, comp) {
+            var obj = {type : 0, result : comp};
+            callback(null, obj);
           });
         },
-        function(err){
-          //res.render() cenas fixes
-        })
+        function(callback) {
+          competitions.getOpenCompetitions(function(comp_list) {
+            var obj = {type : 1, result : comp_list};
+            callback(null, obj);
+          });
+        },
+        function(callback) {
+          events.getEventsByCompetition(competition_id, function(event_list) {
+            var obj = {type : 2, result : event_list};
+            callback(null, obj);
+          })
+        },
+        function(callback) {
+          events.getEventById(event_id, function(event) {
+            var obj = {type : 3, result : event};
+            callback(null, obj);
+          });
+        },
+        function(callback) {
+          teams.getTeamsByCompetition(competition_id, function(teams_list) {
+            var obj = {type : 4, result : teams_list};
+            callback(null, obj);
+          })
+        }
+      ], function(err, results) {
+        var comp, comp_list, event_list, evnt, team_list;
+        var evntResByTeam = new Map();
+        var teamMap = new Map();
+
+        for(var i = 0; i < results.length; i++) {
+          var reslt = results[i];
+          switch (reslt.type) {
+            case 0: comp = reslt.result; break;
+            case 1: comp_list = reslt.result; break;
+            case 2: event_list = reslt.result; break;
+            case 3: evnt = reslt.result; break;
+            case 4: team_list = reslt.result; break;
+          }
+        }
+
+        for(i = 0; evnt != null && i < evnt.classifications.length; i++) {
+          var result = evnt.classifications[i];
+          evntResByTeam.set(result.team_id, result);
+        }
+
+        for(i = 0; i < team_list; i++) {
+          var team = team_list[i];
+          result = evntResByTeam[team._id.toString()];
+          team.result = result;
+        }
+
+        res.render('results', {
+          competitions : comp_list,
+          competition : comp,
+          events : event_list,
+          event : evnt,
+          teams : team_list,
+          user: user,
+          coach: user.coach,
+          glassman: user.glassman
+        });
+
       });
+
     }
     else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});
   });

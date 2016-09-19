@@ -1,0 +1,28 @@
+//
+   Created by Ricardo on 14/09/2016.
+
+extends layout
+
+block page_title
+    title= 'Inserir Resultados'
+
+
+block additional_header
+
+block content
+    include navigation-bar.jade
+
+    .container-fluid
+        br
+
+        if competitions == null
+            center
+                h3 Não existem competições!
+        else
+            .row
+                ul.nav.nav-tabs
+                    each c in competitions
+                        -var klass = (c._id.toString() == competition._id.toString()) ? 'active' : '';
+                        li(role='presentation', class=klass)
+                            a(href='/competitions/results/' + c._id)
+                                = c.name
