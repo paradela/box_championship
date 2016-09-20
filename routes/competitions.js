@@ -253,7 +253,7 @@ router.get('/:competition_id/:event_id/delete', function(req, res, next) {
   });
 });
 
-router.get('/results/:competition_id?', function(req, res, next) {
+/*router.get('/results/:competition_id?', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
     if (user != null && user.coach) {
       var competition_id = req.params.competition_id;
@@ -278,7 +278,7 @@ router.get('/results/:competition_id?', function(req, res, next) {
     }
     else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});
   });
-});
+});*/
 
 router.get('/:competition_id/results/:event_id?', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
@@ -294,18 +294,6 @@ router.get('/:competition_id/results/:event_id?', function(req, res, next) {
           });
         },
         function(callback) {
-          competitions.getOpenCompetitions(function(comp_list) {
-            var obj = {type : 1, result : comp_list};
-            callback(null, obj);
-          });
-        },
-        function(callback) {
-          events.getEventsByCompetition(competition_id, function(event_list) {
-            var obj = {type : 2, result : event_list};
-            callback(null, obj);
-          })
-        },
-        function(callback) {
           events.getEventById(event_id, function(event) {
             var obj = {type : 3, result : event};
             callback(null, obj);
@@ -318,16 +306,13 @@ router.get('/:competition_id/results/:event_id?', function(req, res, next) {
           })
         }
       ], function(err, results) {
-        var comp, comp_list, event_list, evnt, team_list;
+        var comp, evnt, team_list;
         var evntResByTeam = new Map();
-        var teamMap = new Map();
 
         for(var i = 0; i < results.length; i++) {
           var reslt = results[i];
           switch (reslt.type) {
             case 0: comp = reslt.result; break;
-            case 1: comp_list = reslt.result; break;
-            case 2: event_list = reslt.result; break;
             case 3: evnt = reslt.result; break;
             case 4: team_list = reslt.result; break;
           }
@@ -345,9 +330,7 @@ router.get('/:competition_id/results/:event_id?', function(req, res, next) {
         }
 
         res.render('results', {
-          competitions : comp_list,
           competition : comp,
-          events : event_list,
           event : evnt,
           teams : team_list,
           user: user,

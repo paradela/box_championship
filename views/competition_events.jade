@@ -64,6 +64,7 @@ block content
                         th Nome
                         th Início
                         th Fim
+                        th Resultados
                         th
                 tbody
                     if event_list != null
@@ -75,5 +76,7 @@ block content
                                     = c.date_start.getDate() + '-' + c.date_start.getMonth() + '-' + c.date_start.getFullYear()
                                 td
                                     = c.date_end.getDate() + '-' + c.date_end.getMonth() + '-' + c.date_end.getFullYear()
+                                td
+                                    a.btn.btn-success.btn-sm(href='/competitions/' + competition._id + '/results/' + c._id ) Introduzir Resultados
                                 td
                                     a.btn.btn-danger.btn-sm(href='/competitions/' + competition._id + '/' + c._id + '/delete') Eliminar
