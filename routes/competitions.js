@@ -348,6 +348,21 @@ router.get('/:competition_id/results/:event_id?', function(req, res, next) {
 router.post('/results/:event_id', function(req, res, next) {
   cookie.verifyAuthCookie(req, function(err, user) {
     if (user != null && user.coach) {
+      var event_id = req.params.event_id;
+      var team_ids = req.body.id;
+      var results = req.body.result;
+      var tiebreaks = req.body.tiebreak;
+      var mode = req.body.mode;
+
+      var classifications = [];
+      //{place : '1', team_id : '12312eqwd23', result: '454', rx : true }
+      for(var i = 0; i < team_ids.length; i++) {
+        classifications[i] = {team_id : team_ids[i], result : results[i], tiebreak : tiebreaks[i], rx : mode[i] == 'RX'};
+      }
+
+      events.addResults(event_id, classifications, function(ret) {
+        res.status(200).send();
+      })
 
     }
     else res.status(403).render('error', {message: 'Permission Denied', error: {status: 403, stack: []}});

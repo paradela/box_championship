@@ -20,21 +20,34 @@ block content
         h4
             = competition.name
 
-        .table-responsive
-            table.table.table-striped
-                thead
-                    tr
-                        th Equipa
-                        th Resultado
-                        th RX
-                tbody
-                    if teams != null
-                        each t in teams
-                            tr
-                                td
-                                    = t.name
-                                td
-                                    .input-group.input-group-sm
-                                        input.form-control(type='text')
-                                td
-                                    input(type='checkbox')
+        form(action='/competitions/results/' + event._id, method='post', role='form')
+            .table-responsive
+                table.table.table-striped
+                    thead
+                        tr
+                            th Equipa
+                            th Resultado*
+                            th Desempate
+                            th Scaled*
+                    tbody
+                        if teams != null
+                            each t in teams
+                                tr
+                                    td
+                                        = t.name
+                                    td
+                                        input(type='hidden', name='id', value=t._id.toString())
+                                        .input-group.input-group-sm
+                                            input.form-control(type='text', name='result', value='', placeholder='Tempo ou Reps')
+                                    td
+                                        .input-group.input-group-sm
+                                            input.form-control(type='text', name='tiebreak', value='', placeholder='Tempo ou Reps')
+                                    td
+                                        select.form-control(name='mode')
+                                            option(value='RX', selected) RX
+                                            option(value='SCALED') SCALED
+
+            p
+                | *Campos obrigatórios
+            .btn-group
+                button.btn.btn-success(type='submit') Submeter
