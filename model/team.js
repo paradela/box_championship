@@ -95,7 +95,7 @@ exports.getUserTeams = function(user, result) {
 };
 
 exports.getTeamsByCompetition = function(competition_id, result) {
-  db.get().collection(table_name).find({competition_id : competition_id}, function(err, cursor) {
+  db.get().collection(table_name).find({competition_id : competition_id.toString()}, function(err, cursor) {
     cursor.toArray(function (error, list) {
       if (error != null) list = [];
       result(list);

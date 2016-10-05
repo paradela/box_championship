@@ -8,13 +8,25 @@ block page_title
 
 
 block additional_header
-    //link(rel='stylesheet', href='/stylesheets/index.css')
+    link(rel='stylesheet', href='/stylesheets/classification.css')
 
 block content
 
     include navigation-bar.jade
 
     .container-fluid
+
+        if current_competition != null
+            .input-group-btn.select
+                button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='false')
+                    span.selected
+                        = current_competition.name
+                    span.caret
+                ul.dropdown-menu.option(role='menu')
+                    each comp in competitions
+                        li
+                            a(href='/classification/' + comp._id.toString())
+                                = comp.name
 
         if classifications == null
             br
@@ -27,7 +39,9 @@ block content
                         tr
                             th #
                             th Equipa
+                            -var events_count = 0;
                             each ev in classifications.events
+                                - events_count++;
                                 th
                                     = ev
                     tbody
@@ -39,10 +53,17 @@ block content
                                         = result.points
                                         | )
                                     td
-                                        = result.team_name
+                                        = result.name
+                                    -var res_count = 0;
                                     each ev in result.team_events
+                                        -res_count++;
                                         td
                                             = ev.place
                                             | (
                                             = ev.result
                                             | )
+                                    if events_count > res_count
+                                        - var i = events_count - res_count;
+                                        while i > 0
+                                            td --
+                                            -i--;
