@@ -237,9 +237,15 @@ function compare(a, b) {
   var btb = parseInt(b.tiebreak.replace(/:/g, ''));
   var a0 = (a.rx)? 1 : 0;
   var b0 = (b.rx)? 1 : 0;
+  var parA = a.participation;
+  var parB = b.participation;
+
+  //if both teams have the same number of participants, continue
+  var res = parB - parA;
+  if(res != 0) return res;
 
   //if both results are rx or scaled continue
-  var res = b0 - a0;
+  res = b0 - a0;
   if(res != 0) return res;
 
   if(rIsTime) {

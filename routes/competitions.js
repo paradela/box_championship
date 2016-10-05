@@ -353,11 +353,18 @@ router.post('/results/:event_id', function(req, res, next) {
       var results = req.body.result;
       var tiebreaks = req.body.tiebreak;
       var mode = req.body.mode;
+      var participation = req.body.participation;
 
       var classifications = [];
       //{place : '1', team_id : '12312eqwd23', result: '454', rx : true }
       for(var i = 0; i < team_ids.length; i++) {
-        classifications[i] = {team_id : team_ids[i], result : results[i], tiebreak : tiebreaks[i], rx : mode[i] == 'RX'};
+        classifications[i] = {
+          team_id : team_ids[i],
+          result : results[i],
+          tiebreak : tiebreaks[i],
+          rx : mode[i] == 'RX',
+          participation : participation[i]
+        };
       }
 
       events.addResults(event_id, classifications, function(ret) {
