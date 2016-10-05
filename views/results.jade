@@ -32,20 +32,23 @@ block content
                     tbody
                         if teams != null
                             each t in teams
+                                -var res = (t.result != null)? t.result.result : '';
+                                -var tiebreak = (t.result != null)? t.result.tiebreak : '';
+                                -var rx = (t.result != null)? t.result.rx : null;
                                 tr
                                     td
                                         = t.name
                                     td
                                         input(type='hidden', name='id', value=t._id.toString())
                                         .input-group.input-group-sm
-                                            input.form-control(type='text', name='result', value='', placeholder='Tempo ou Reps')
+                                            input.form-control(type='text', name='result', value=res, placeholder='Tempo ou Reps')
                                     td
                                         .input-group.input-group-sm
-                                            input.form-control(type='text', name='tiebreak', value='', placeholder='Tempo ou Reps')
+                                            input.form-control(type='text', name='tiebreak', value=tiebreak, placeholder='Tempo ou Reps')
                                     td
                                         select.form-control(name='mode')
-                                            option(value='RX', selected) RX
-                                            option(value='SCALED') SCALED
+                                            option(value='RX', selected=rx) RX
+                                            option(value='SCALED', selected=!rx) SCALED
 
             p
                 | *Campos obrigatórios

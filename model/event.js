@@ -15,7 +15,7 @@ exports.createEvent = function(competition_id, name, description, notes, date_st
     notes: notes,
     date_start : date_start,
     date_end : date_end,
-    classifications : [] /* {place : '1', team_id : '12312eqwd23', result: '454', rx : true } */
+    classifications : [] /* {team_id : '12312eqwd23', result: '454', rx : true } */
   };
 
   db.get().collection(table_name).insertOne(event, function(err, res) {
@@ -57,14 +57,14 @@ exports.deleteEventById = function(event_id, result) {
 
 exports.addResults = function(id, results, res) {
 
-  results.sort(compare);
+  //results.sort(compare);
 
-  for(var i = 1; i <= results.length; i++) {
+  /*for(var i = 1; i <= results.length; i++) {
     results[i-1].place = i;
-  }
+  }*/
 
   db.get().collection(table_name).update({_id: ObjectId(id)}, {$set : {classifications : results}}, function(err, status) {
-    res(true);
+    res(err == null);
   });
 };
 

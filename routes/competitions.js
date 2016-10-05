@@ -307,7 +307,7 @@ router.get('/:competition_id/results/:event_id?', function(req, res, next) {
         }
       ], function(err, results) {
         var comp, evnt, team_list;
-        var evntResByTeam = new Map();
+        var evntResByTeam = {};
 
         for(var i = 0; i < results.length; i++) {
           var reslt = results[i];
@@ -320,10 +320,10 @@ router.get('/:competition_id/results/:event_id?', function(req, res, next) {
 
         for(i = 0; evnt != null && i < evnt.classifications.length; i++) {
           var result = evnt.classifications[i];
-          evntResByTeam.set(result.team_id, result);
+          evntResByTeam[result.team_id] = result;
         }
 
-        for(i = 0; i < team_list; i++) {
+        for(i = 0; i < team_list.length; i++) {
           var team = team_list[i];
           result = evntResByTeam[team._id.toString()];
           team.result = result;
@@ -361,7 +361,9 @@ router.post('/results/:event_id', function(req, res, next) {
       }
 
       events.addResults(event_id, classifications, function(ret) {
-        res.status(200).send();
+        if(ret)
+          res.redirect('/classification');
+        else res.status(500).render('error', {message: 'Something went wrong', error: {status: 500, stack: []}});
       })
 
     }
