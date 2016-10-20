@@ -45,42 +45,42 @@ block content
                                 th
                                     = ev
                     tbody
-                            each result in classifications.team_results
-                                tr
-                                    td
-                                        = result.place
-                                        | (
-                                        = result.points
-                                        | )
-                                    td
-                                        = result.name
-                                    -var res_count = 0;
+                        each result in classifications.team_results
+                            tr
+                                td
+                                    = result.place
+                                    | (
+                                    = result.points
+                                    | )
+                                td
+                                    = result.name
+                                -var res_count = 0;
+                                each ev in result.team_events
                                     -var athlete = 0;
-                                    each ev in result.team_events
-                                        -res_count++;
-                                        td
-                                            .list-inline
+                                    -res_count++;
+                                    td
+                                        .list-inline
+                                            li
+                                                = ev.place
+                                                | (
+                                                = ev.result
+                                                | )
+                                            if ev.rx
                                                 li
-                                                    = ev.place
-                                                    | (
-                                                    = ev.result
-                                                    | )
-                                                if ev.rx
-                                                    li
-                                                        span
-                                                            = 'RX'
-                                                else
-                                                    li
-                                                        span(style="margin-right:10px;")
-                                                            = 'S '
+                                                    span
+                                                        = 'RX'
+                                            else
+                                                li
+                                                    span(style="margin-right:10px;")
+                                                        = 'S '
 
-                                                while athlete < ev.participation
-                                                    li
-                                                        img(src='images/person-icon-gray.png' style="height:20px; margin-right:-10px;")
-                                                    -athlete++;
+                                            while athlete < ev.participation
+                                                li
+                                                    img(src='images/person-icon-gray.png' style="height:20px; margin-right:-10px;")
+                                                -athlete++;
 
-                                    if events_count > res_count
-                                        - var i = events_count - res_count;
-                                        while i > 0
-                                            td --
-                                            -i--;
+                                if events_count > res_count
+                                    - var i = events_count - res_count;
+                                    while i > 0
+                                        td --
+                                        -i--;
