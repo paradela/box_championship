@@ -189,7 +189,7 @@ function classifyTeams(teams) {
 }
 
 function classifyEvents(events) {
-  if(events != null || events.length > 0) {
+  if(events != null && events.length > 0) {
     for(var event of events) {
       if(event.classifications != null)
         classifyEvent(event.classifications);

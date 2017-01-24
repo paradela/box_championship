@@ -20,7 +20,7 @@ exports.createCompetition = function(name, result) {
 };
 
 exports.getLatestCompetition = function(result) {
-  db.get().collection(table_name).findOne({open: true}, {sort: [['creation_date', 'desc']]}, function(error, doc) {
+  db.get().collection(table_name).findOne({}, {sort: [['creation_date', 'desc']]}, function(error, doc) {
     result(doc);
   });
 };
